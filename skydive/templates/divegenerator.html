@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block title %}FS4 Generator{% endblock %}
+{% block body %}
+
+<h1>FS4 Generator</h1>
+
+<form action="" method="get">
+  <label for="num_jumps">Number of jumps</label>
+  <div class="form-number">
+    <button type="button" class="btn" onClick="changeNum('num_jumps', -1)">-</button>
+    <input class="form" id="num_jumps" name="num_jumps" type="number" value="{{ request.args.get('num_jumps') or '10' }}">
+    <button type="button" class="btn" onClick="changeNum('num_jumps', 1)">+</button>
+  </div>
+
+  <label for="class">Class</label>
+  <div class="dive-generator-class-wrapper">
+    <input id="class-0" name="class" type="radio" value="rookie" {{ "checked" if request.args.get("class") == "rookie" or not request.args.get("class")}}>
+    <label class="radio_option" for="class-0">Rookie</label>
+    <input id="class-1" name="class" type="radio" value="a" {{ "checked" if request.args.get("class") == "a" }}>
+    <label class="radio_option" for="class-1">A</label>
+    <input id="class-2" name="class" type="radio" value="aa" {{ "checked" if request.args.get("class") == "aa" }}>
+    <label class="radio_option" for="class-2">AA</label>
+    <input id="class-3" name="class" type="radio" value="aaa" {{ "checked" if request.args.get("class") == "aaa" }}>
+    <label class="radio_option" for="class-3">AAA</label>
+    <input id="class-4" name="class" type="radio" value="custom" {{ "checked" if request.args.get("class") == "custom" }}>
+    <label class="radio_option" for="class-4">Custom</label>
+    <div id="dive-options-wrapper" class="disabled">
+      <label for="num_points">Min points per jump</label>
+      <div class="form-number">
+        <button type="button" class="btn" onClick="changeNum('num_points', -1)">-</button>
+        <input class="form" id="num_points" name="num_points" type="number" value="4">
+        <button type="button" class="btn" onClick="changeNum('num_points', 1)">+</button>
+      </div>
+      <div class="dive-options-flex-wrapper">
+        <div class="checkbox-wrapper">
+          <input type="checkbox" name="randoms" id="randoms">
+          <label for="randoms">RND</label>
+          <div class="line"></div>
+          {% for _, random in randoms %}
+            <input type="checkbox" name="random-{{ random | lower }}" id="random-{{ random | lower }}">
+            <label for="random-{{ random | lower }}">{{ random }}</label>
+          {% endfor %}
+        </div>
+        <div class="checkbox-wrapper">
+          <input type="checkbox" name="a_blocks" id="a_blocks">
+          <label for="a_blocks">A</label>
+          <div class="line"></div>
+          {% for _, block in a_blocks %}
+            <input type="checkbox" name="a_block-{{ block | lower }}" id="a_block-{{ block | lower }}">
+            <label for="a_block-{{ block | lower }}">{{ block }}</label>
+          {% endfor %}
+        </div>
+        <div class="checkbox-wrapper">
+        <input type="checkbox" name="aa_blocks" id="aa_blocks">
+          <label for="aa_blocks">AA</label>
+          <div class="line"></div>
+          {% for _, block in aa_blocks %}
+            <input type="checkbox" name="aa_block-{{ block | lower }}" id="aa_block-{{ block | lower }}">
+            <label for="aa_block-{{ block | lower }}">{{ block }}</label>
+          {% endfor %}
+        </div>
+        <div class="checkbox-wrapper">
+          <input type="checkbox" name="aaa_blocks" id="aaa_blocks">
+          <label for="aaa_blocks">AAA</label>
+          <div class="line"></div>
+          {% for _, block in aaa_blocks %}
+            <input type="checkbox" name="aaa_block-{{ block | lower }}" id="aaa_block-{{ block | lower }}">
+            <label for="aaa_block-{{ block | lower }}">{{ block }}</label>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <button type="button" id="dive-options-toggle" onClick="toggleDiveCustomForm()">Show options</button>
+  </div>
+
+  <button type="submit" class="btn">Generate</button>
+</form>
+
+{% if program %}
+  <div class="line"></div>
+
+  <button type="button" onClick="printProgram()" class="btn">Print</button>
+
+  <div id="full-program">
+    {% for jump in program %}
+      <div class="jump-program">
+        <div class="list-index">{{ loop.index }}.</div>
+        {% for formation in jump | map(attribute=1) %}
+          <div class="img-wrapper">
+            <img src="{{ url_for('static', filename='fs4pool/' + (formation | lower) + '.png') }}" alt="{{ formation }}">
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<script src="{{url_for('static', filename='divegenerator.js')}}"></script>
+{% endblock %}
