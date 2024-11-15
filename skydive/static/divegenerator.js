@@ -114,10 +114,11 @@ function disableAll(state = true) {
 }
 
 function printProgram() {
-    const programWindow = window.open("", "title", "attributes");
-    const programContent = document.getElementById("full-program").innerHTML;
-    programWindow.document.write(programContent);
-    programWindow.document.write(`
+    const printWindow = window.open("", "title", "attributes");
+    const printContent = document.getElementById("full-program").innerHTML;
+    printWindow.document.write(printContent);
+    printWindow.document.write(`
+        <title>${window.location.href}</title>
         <style>
             .jump-program {
                 display: flex;
@@ -135,8 +136,18 @@ function printProgram() {
             }
         </style>
     `);
-    programWindow.print();
-    programWindow.close();
+
+    const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+    
+    if (isFirefox) {
+        printWindow.print();
+        printWindow.close();
+    } else {
+        printWindow.onafterprint = function() {
+            printWindow.close();
+        };
+        printWindow.print();
+    }
 }
 
 function setupMainCheckboxes() {
