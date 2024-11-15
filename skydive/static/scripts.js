@@ -54,7 +54,7 @@ function toggleLogbookSubmenu() {
     }
 }
 
-// Show Logbook submenu if the current page is "import" or "export" on page load
+// Show Logbook submenu if the current page is "logbook" on page load
 document.addEventListener("DOMContentLoaded", () => {
     const submenu = document.getElementById("logbook-submenu");
     const toggleButton = document.getElementById("logbook-submenu-toggle");
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Re-enable transition after a short delay to allow for initial visibility
         setTimeout(() => {
             submenu.style.transition = ""; // Revert to the default CSS transition
-        }, 0);
+        }, 100);
     }
 });
 
@@ -106,7 +106,7 @@ function adjustNavbarPosition() {
     const navbar = document.querySelector('#navbar');
 
     // Check if the page width is less than 768px
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 768 || /Mobi|Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent)) {
         const headerHeight = header.offsetHeight;
         navbar.style.top = `${headerHeight}px`; // Adjust navbar position
     } else {
