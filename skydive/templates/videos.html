@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}Videos{% endblock %}
+{% block body %}
+
+<h1>/{{ subfolder or ''}}</h1>
+
+<div class="directory-browsing-wrapper">
+    {% if subfolder %}
+        <i class='bx bx-subdirectory-left'></i>
+        <a href="{{ url_for('videos.browse', subfolder=subfolder.rsplit('/', 1)[0] if '/' in subfolder else None) }}">
+            Back</a>
+        <br><br>
+    {% endif %}
+
+    <ul>
+    {% for dir in dirs %}
+        <li>
+            <i class='bx bx-folder'></i>
+            <a href="{{ url_for('videos.browse', subfolder=dir.full_path) }}">{{ dir.name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <ul>
+    {% for file in files %}
+        <li>
+            <i class='bx bx-file-blank'></i>
+            <a href="{{ url_for('videos.download', filename=file.full_path) }}">{{ file.name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

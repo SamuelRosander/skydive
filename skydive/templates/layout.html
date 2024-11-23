@@ -11,7 +11,8 @@
   <body>
     <div class="wrapper">
       <div class="header">
-        <a href="{{ url_for('main.home') }}" class="site-logo">Skydiving</a>
+        <a href="{{ url_for('main.home') }}" class="site-logo">
+          <i class='bx bx-cloud'></i>Skydiving</a>
         <button id="menu-button" onClick="toggleMenu()">
           <i class='bx bx-menu'></i>
         </button>
@@ -29,6 +30,7 @@
                 <li><a href="{{ url_for('logbook.logbook_export') }}" class="sub-link"><i class="bx bx-cloud-download"></i> Export</a></li>
               </ul>
             </li>
+            <li><a href="{{ url_for('videos.browse') }}"><i class='bx bx-movie-play' ></i> Video Archive</a></li>
           </ul>
 
           <div class="line"></div>

@@ -1,6 +1,6 @@
 from flask import Flask
 from .extensions import db, login_manager
-from .routes import main, auth, divegenerator, logbook
+from .routes import main, auth, divegenerator, logbook, videos
 
 
 def create_app(test_config=None):
@@ -19,6 +19,7 @@ def create_app(test_config=None):
     app.register_blueprint(auth.bp)
     app.register_blueprint(divegenerator.bp)
     app.register_blueprint(logbook.bp)
+    app.register_blueprint(videos.bp)
 
     app.register_error_handler(401, main.error)
     app.register_error_handler(403, main.error)
