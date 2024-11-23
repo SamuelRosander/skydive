@@ -2,9 +2,9 @@
 {% block title %}Videos{% endblock %}
 {% block body %}
 
-<h1>/{{ subfolder or ''}}</h1>
-
-<div class="directory-browsing-wrapper">
+<h1>Video Archive</h1>
+<div class="video-wrapper">
+    <h4>/{{ subfolder or ''}}</h4>
     {% if subfolder %}
         <i class='bx bx-subdirectory-left'></i>
         <a href="{{ url_for('videos.browse', subfolder=subfolder.rsplit('/', 1)[0] if '/' in subfolder else None) }}">
@@ -25,7 +25,7 @@
     {% for file in files %}
         <li>
             <i class='bx bx-file-blank'></i>
-            <a href="{{ url_for('videos.download', filename=file.full_path) }}">{{ file.name }}</a>
+            <a href="{{ url_for('videos.play', filename=file.full_path) }}">{{ file.name }}</a>
         </li>
     {% endfor %}
     </ul>

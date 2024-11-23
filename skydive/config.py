@@ -3,6 +3,7 @@ from os import environ
 SECRET_KEY = environ.get("SECRET_KEY")
 SQLALCHEMY_DATABASE_URI = environ.get("DB_URL")
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+VIDEO_FOLDER = "/videos"
 OAUTH2_PROVIDERS = {
     # Google OAuth 2.0 documentation:
     # https://developers.google.com/identity/protocols/oauth2/web-server#httprest

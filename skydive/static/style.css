@@ -479,15 +479,26 @@ input[type="checkbox"]:checked + label::after {
 }
 
 /* Video Archive */
+.video-wrapper {
+    font-family: 'PT Mono', 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+}
 
-.directory-browsing-wrapper li {
+.video-wrapper li {
     list-style: none;
 }
 
-.directory-browsing-wrapper a {
+.video-wrapper a {
     font-family: 'PT Mono', 'Courier New', Courier, monospace;
 }
 
+#video-player {
+    max-width: 100%;
+    max-height: 50rem;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+    display: block;
+}
 
 /* Global */
 

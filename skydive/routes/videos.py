@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, send_file, abort
+from flask import Blueprint, render_template, abort, send_from_directory, \
+    current_app
 import os
 
 bp = Blueprint('videos', __name__, url_prefix="/videos")
@@ -7,7 +8,7 @@ bp = Blueprint('videos', __name__, url_prefix="/videos")
 @bp.route('/')
 @bp.route('/<path:subfolder>')
 def browse(subfolder=None):
-    base_path = "/mnt/videos/"
+    base_path = current_app.config.get("VIDEO_FOLDER")
 
     folder_path = os.path.join(
         base_path, subfolder) if subfolder else base_path
@@ -36,6 +37,11 @@ def browse(subfolder=None):
 
 @bp.route('/download/<path:filename>')
 def download(filename):
-    file_path = os.path.join("/mnt/videos/", filename)
+    return send_from_directory(
+        current_app.config.get("VIDEO_FOLDER"),
+        filename)
 
-    return send_file(file_path)
+
+@bp.route('/play/<path:filename>')
+def play(filename):
+    return render_template("play.html", file=filename)
