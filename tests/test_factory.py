@@ -10,5 +10,5 @@ def test_config():
 def test_home(client):
     response = client.get("/")
 
-    assert response.status_code == 200
-    assert b"<title>Skydiving" in response.data
+    assert response.status_code == 200, "Status code not 200"
+    assert b"<title>Skydiving" in response.data, "Incorrect page title"

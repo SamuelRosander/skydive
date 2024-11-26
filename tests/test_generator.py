@@ -1,14 +1,9 @@
-def test_get(client):
-    response = client.get("/divegenerator/")
-
-    assert response.status_code == 200, "Status code not 200"
-    assert b"<title>FS4 Generator</title>" in response.data, "Incorrect page title"
-
-
-def test_generate(client):
+def test_generator(client):
     response = client.get("/divegenerator/?num_jumps=12&class=aaa")
 
-    assert response.status_code == 200
+    assert response.status_code == 200, "Status code not 200"
+    assert b"<title>FS4 Generator</title>" in response.data, \
+        "Incorrect page title"
 
     for char in range(ord('a'), ord('q') + 1):
         if char == ord('i'):

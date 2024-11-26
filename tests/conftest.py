@@ -13,12 +13,6 @@ def app():
         "SQLALCHEMY_TRACK_MODIFICATIONS": False,
         "VIDEO_FOLDER": "/videos"
     })
-
-    with app.app_context():
-        db.create_all()
-        db.session.add(User(email='test@url.test'))
-        db.session.add(User(email='test2@url.test'))
-        db.session.commit()
     yield app
 
 
