@@ -1,6 +1,5 @@
 import pytest
-from skydive import create_app, db
-from skydive.models import User
+from skydive import create_app
 
 
 @pytest.fixture()
