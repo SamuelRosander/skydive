@@ -217,6 +217,7 @@ h1 {
 .main-container {
     padding: 3rem;
     flex-grow: 1;
+    max-width: 100%;
 }
 
 .form {
@@ -490,6 +491,9 @@ input[type="checkbox"]:checked + label::after {
 
 .video-wrapper li {
     list-style: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .video-wrapper a {
