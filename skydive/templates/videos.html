@@ -21,13 +21,15 @@
     {% endfor %}
     </ul>
 
-    <ul>
-    {% for file in files %}
-        <li>
-            <i class='bx bx-file-blank'></i>
-            <a href="{{ url_for('videos.play', filename=file.full_path) }}">{{ file.name }}</a>
-        </li>
-    {% endfor %}
-    </ul>
+    <div class="video-files-wrapper">
+        <ul>
+        {% for file in files %}
+            <li>
+                <i class='bx bx-file-blank'></i>
+                <a href="{{ url_for('videos.play', filename=file.full_path) }}">{{ file.name }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
 </div>
 {% endblock %}
