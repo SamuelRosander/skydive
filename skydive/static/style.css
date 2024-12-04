@@ -496,7 +496,7 @@ input[type="checkbox"]:checked + label::after {
     font-family: var(--font-monospace);
 }
 
-.video-wrapper ul li:nth-child(2n) {
+.video-files-wrapper ul li:nth-child(2n) {
     margin-bottom: 1rem;
 }
 
