@@ -16,7 +16,10 @@ def dive_generator():
 
     full_program = []
 
-    if request.args.get("num_jumps") and request.args.get("class"):
+    if request.args.get("program"):
+        program_string = request.args.get("program")
+        full_program = [jump.split('-') for jump in program_string.split(',')]
+    elif request.args.get("num_jumps") and request.args.get("class"):
         match request.args["class"].lower():
             case "rookie":
                 min_points_per_jump = 3
@@ -43,8 +46,7 @@ def dive_generator():
 
         current_pool = pool.copy()
 
-        if sum([point for point, formation in pool]) >= \
-                min_points_per_jump:
+        if sum([p[0] for p in pool]) >= min_points_per_jump:
             for i in range(int(request.args["num_jumps"])):
                 program = []
 
@@ -57,7 +59,7 @@ def dive_generator():
 
                     if len(current_pool) <= 0:
                         current_pool = pool.copy()
-                full_program.append(program)
+                full_program.append([p[1] for p in program])
         else:
             flash("Not enough formations to be able to make a program!",
                   "error")
