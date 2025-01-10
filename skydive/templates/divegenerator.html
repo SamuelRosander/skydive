@@ -4,26 +4,35 @@
 
 <h1>FS4 Generator</h1>
 
-<form action="" method="get">
-  <label for="num_jumps">Number of jumps</label>
-  <div class="form-number">
-    <button type="button" class="btn" onClick="changeNum('num_jumps', -1)">-</button>
-    <input class="form" id="num_jumps" name="num_jumps" type="number" value="{{ request.args.get('num_jumps') or '10' }}">
-    <button type="button" class="btn" onClick="changeNum('num_jumps', 1)">+</button>
+<div class="generator-options-wrapper">
+  <div class="flex-row">
+    <input id="form-random" name="form_type" type="radio" value="random" checked>
+    <label class="radio_option" for="form-random">Random</label>
+    <input id="form-manual" name="form_type" type="radio" value="manual" {{ "checked" if request.args.get("program") }}>
+    <label class="radio_option" for="form-manual">Manual</label>
   </div>
 
-  <label for="class">Class</label>
-  <div class="dive-generator-class-wrapper">
-    <input id="class-0" name="class" type="radio" value="rookie" {{ "checked" if request.args.get("class") == "rookie" or not request.args.get("class")}}>
-    <label class="radio_option" for="class-0">Rookie</label>
-    <input id="class-1" name="class" type="radio" value="a" {{ "checked" if request.args.get("class") == "a" }}>
-    <label class="radio_option" for="class-1">A</label>
-    <input id="class-2" name="class" type="radio" value="aa" {{ "checked" if request.args.get("class") == "aa" }}>
-    <label class="radio_option" for="class-2">AA</label>
-    <input id="class-3" name="class" type="radio" value="aaa" {{ "checked" if request.args.get("class") == "aaa" }}>
-    <label class="radio_option" for="class-3">AAA</label>
-    <input id="class-4" name="class" type="radio" value="custom" {{ "checked" if request.args.get("class") == "custom" }}>
-    <label class="radio_option" for="class-4">Custom</label>
+  <form id="randomForm" action="" method="get">
+    <label for="num_jumps">Number of jumps</label>
+    <div class="form-number">
+      <button type="button" class="btn" onClick="changeNum('num_jumps', -1)">-</button>
+      <input class="form" id="num_jumps" name="num_jumps" type="number" value="{{ request.args.get('num_jumps') or '10' }}">
+      <button type="button" class="btn" onClick="changeNum('num_jumps', 1)">+</button>
+    </div>
+
+    <label for="class">Class</label>
+    <div class="flex-row mb-0">
+      <input id="class-0" name="class" type="radio" value="rookie" {{ "checked" if request.args.get("class") == "rookie" or not request.args.get("class")}}>
+      <label class="radio_option" for="class-0">Rookie</label>
+      <input id="class-1" name="class" type="radio" value="a" {{ "checked" if request.args.get("class") == "a" }}>
+      <label class="radio_option" for="class-1">A</label>
+      <input id="class-2" name="class" type="radio" value="aa" {{ "checked" if request.args.get("class") == "aa" }}>
+      <label class="radio_option" for="class-2">AA</label>
+      <input id="class-3" name="class" type="radio" value="aaa" {{ "checked" if request.args.get("class") == "aaa" }}>
+      <label class="radio_option" for="class-3">AAA</label>
+      <input id="class-4" name="class" type="radio" value="custom" {{ "checked" if request.args.get("class") == "custom" }}>
+      <label class="radio_option" for="class-4">Custom</label>
+    </div>
     <div id="dive-options-wrapper" class="disabled">
       <label for="num_points">Min points per jump</label>
       <div class="form-number">
@@ -71,10 +80,26 @@
       </div>
     </div>
     <button type="button" id="dive-options-toggle" onClick="toggleDiveCustomForm()">Show options</button>
-  </div>
+    <button type="submit" class="btn">Generate</button>
+  </form>
 
-  <button type="submit" class="btn">Generate</button>
-</form>
+  <form id="manualForm" onsubmit="generateUrl(event)" method="get">
+    <div id="rows-container">
+      {% for i in range(5) %}
+        <div class="flex-row">
+          <div class="list-index">{{ i+1 }}.</div>
+          {% for j in range(6) %}
+            <input id="f{{i}}{{j}}" name="f{{i}}{{j}}" type="text" class="form" maxlength="2" autocomplete="off">
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="flex-row">
+      <button type="submit" class="btn">Generate</button>
+      <button type="button" class="btn uncolored" id="add_rows">Add 5 more rows</button>
+    </div>
+  </form>
+</div>
 
 {% if program %}
   <div class="line"></div>
@@ -85,7 +110,7 @@
     {% for jump in program %}
       <div class="jump-program">
         <div class="list-index">{{ loop.index }}.</div>
-        {% for formation in jump | map(attribute=1) %}
+        {% for formation in jump %}
           <div class="img-wrapper">
             <img src="{{ url_for('static', filename='fs4pool/' + (formation | lower) + '.png') }}" alt="{{ formation }}">
           </div>

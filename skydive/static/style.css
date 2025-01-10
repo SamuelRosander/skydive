@@ -250,9 +250,28 @@ h1 {
 }
 
 .form-number .form {
-    width: 3rem;
     text-align: center;
     width: 4rem;
+}
+
+.flex-row {
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.flex-row .form {
+    width: 100%;
+    padding: 1rem 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.flex-row label {
+    flex: 1;
 }
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
@@ -279,6 +298,15 @@ input[type=number] {
     cursor: pointer;
 }
 
+.btn.uncolored {
+    background-color: var(--form-color);
+    color: var(--text-color);
+}
+
+.btn.uncolored:hover {
+    background-color: var(--form-color-hover);
+}
+
 .btn:disabled:hover {
     background-color: var(--form-color);
     cursor: default;
@@ -286,9 +314,12 @@ input[type=number] {
 
 .radio_option {
     background-color: var(--form-color);
-    padding: 1rem;
+    padding: 1rem 0;
     display: inline-block;
     user-select: none;
+    box-shadow: inset 0 -2px 0 var(--form-color-hover);
+    text-align: center;
+    overflow: hidden;
 }
 
 .radio_option:hover {
@@ -353,20 +384,12 @@ input[type="radio"]:checked + .radio_option {
 
 /* Dive Generator */
 
-.dive-generator-class-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0 5px;
-    max-width: 600px;
+.generator-options-wrapper {
+    max-width: 800px;
 }
 
-.dive-generator-class-wrapper li {
-    list-style-type: none;
-}
-
-.dive-generator-class-wrapper label {
-    flex: 1;
+#randomForm, #manualForm {
+    display: none;
 }
 
 #dive-options-wrapper {
@@ -517,6 +540,10 @@ input[type="checkbox"]:checked + label::after {
 }
 
 /* Global */
+
+.mb-0 {
+    margin-bottom: 0rem;
+}
 
 .mb-1 {
     margin-bottom: 1rem;
