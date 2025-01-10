@@ -214,8 +214,7 @@ function generateUrl(event) {
     }
   
     // Generate the URL
-    const programParam = rows.join(",");
-    const customUrl = `?program=${encodeURIComponent(programParam)}`;
+    const customUrl = `?program=${rows.join("_")}`;
   
     // Redirect the user to the new URL
     window.location.href = customUrl;
@@ -228,7 +227,7 @@ function autofillManualForm() {
     if (!program) return;
   
     // Split the program into rows and values
-    const rows = program.split(",");
+    const rows = program.split("_");
     rows.forEach((row, i) => {
         const values = row.split("-");
         values.forEach((value, j) => {

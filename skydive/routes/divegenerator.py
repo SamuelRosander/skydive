@@ -18,7 +18,7 @@ def dive_generator():
 
     if request.args.get("program"):
         program_string = request.args.get("program")
-        full_program = [jump.split('-') for jump in program_string.split(',')]
+        full_program = [jump.split('-') for jump in program_string.split('_')]
     elif request.args.get("num_jumps") and request.args.get("class"):
         match request.args["class"].lower():
             case "rookie":
