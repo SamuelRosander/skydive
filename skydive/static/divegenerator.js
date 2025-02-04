@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initializePage();
     setupRadioButtons();
     setupMainCheckboxes();
-    autofillManualForm();
     toggleForms();
 });
 
@@ -12,7 +11,7 @@ function initializePage() {
     setOptions(jumpClass);
     document.getElementById("form-random").addEventListener("change", toggleForms);
     document.getElementById("form-manual").addEventListener("change", toggleForms);
-    document.getElementById("add_rows").addEventListener("click", addRows);
+    document.getElementById("add_row").addEventListener("click", addRow);
 }
 
 function toggleDiveCustomForm() {
@@ -199,7 +198,6 @@ function generateUrl(event) {
     const form = document.getElementById("manualForm");
     const rows = [];
   
-    // Loop through rows and columns to collect the data
     for (let i = 0; i < 10; i++) {
         const row = [];
         for (let j = 0; j < 6; j++) {
@@ -213,42 +211,18 @@ function generateUrl(event) {
         }
     }
   
-    // Generate the URL
     const customUrl = `?program=${rows.join("_")}`;
   
-    // Redirect the user to the new URL
     window.location.href = customUrl;
 }
 
-function autofillManualForm() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const program = urlParams.get("program");
-  
-    if (!program) return;
-  
-    // Split the program into rows and values
-    const rows = program.split("_");
-    rows.forEach((row, i) => {
-        const values = row.split("-");
-        values.forEach((value, j) => {
-            const input = document.getElementById(`f${i}${j}`);
-            if (input) {
-                input.value = value; // Autofill the input
-            }
-        });
-    });
-}
-
 function toggleForms() {
-    // Get the selected value
     const randomRadio = document.getElementById("form-random");
     const manualRadio = document.getElementById("form-manual");
     
-    // Get the forms
     const randomForm = document.getElementById("randomForm");
     const manualForm = document.getElementById("manualForm");
   
-    // Show/hide based on selection
     if (randomRadio.checked) {
         randomForm.style.display = "block";
         manualForm.style.display = "none";
@@ -259,35 +233,30 @@ function toggleForms() {
     }
 }
 
-// Function to add 5 more rows
-function addRows() {
+function addRow() {
     const rowsContainer = document.getElementById("rows-container");
-    const currentRows = rowsContainer.querySelectorAll(".flex-row").length; // Count existing rows
-    const numColumns = 6; // Adjust if the number of columns changes dynamically
+    const currentRows = rowsContainer.querySelectorAll(".flex-row").length;
+    const urlParams = new URLSearchParams(window.location.search);
+    const numColumns = parseInt(urlParams.get("num_points")) || 5;
 
-    for (let i = 0; i < 5; i++) {
-        const rowIndex = currentRows + i; // New row index
-        const row = document.createElement("div");
-        row.className = "flex-row";
+    const row = document.createElement("div");
+    row.className = "flex-row";
 
-        // Add the row index
-        const indexDiv = document.createElement("div");
-        indexDiv.className = "list-index";
-        indexDiv.textContent = `${rowIndex + 1}.`;
-        row.appendChild(indexDiv);
+    const indexDiv = document.createElement("div");
+    indexDiv.className = "list-index";
+    indexDiv.textContent = `${currentRows + 1}.`;
+    row.appendChild(indexDiv);
 
-        // Add input fields for the row
-        for (let colIndex = 0; colIndex < numColumns; colIndex++) {
-            const input = document.createElement("input");
-            input.type = "text";
-            input.className = "form";
-            input.maxLength = 2;
-            input.autocomplete = "off";
-            input.id = `f${rowIndex}${colIndex}`;
-            input.name = `f${rowIndex}${colIndex}`;
-            row.appendChild(input);
-        }
-
-        rowsContainer.appendChild(row); // Add the row to the container
+    for (let colIndex = 0; colIndex < numColumns; colIndex++) {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "form";
+        input.maxLength = 2;
+        input.autocomplete = "off";
+        input.id = `f${currentRows}${colIndex}`;
+        input.name = `f${currentRows}${colIndex}`;
+        row.appendChild(input);
     }
+
+    rowsContainer.appendChild(row);
 }
