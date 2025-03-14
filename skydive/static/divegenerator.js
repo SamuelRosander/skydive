@@ -3,6 +3,15 @@ document.addEventListener("DOMContentLoaded", () => {
     setupRadioButtons();
     setupMainCheckboxes();
     toggleForms();
+
+    document.getElementById("rows-container").addEventListener("click", function (event) {
+        if (event.target.classList.contains("btn") && event.target.textContent === "Clear row") {
+            const row = event.target.closest(".flex-row");
+            if (row) {
+                row.querySelectorAll("input").forEach(input => input.value = "");
+            }
+        }
+    });
 });
 
 function initializePage() {
@@ -258,5 +267,12 @@ function addRow() {
         row.appendChild(input);
     }
 
+    const clearButton = document.createElement("button");
+    clearButton.type = "button";
+    clearButton.className = "btn";
+    clearButton.id = `clear-${currentRows}`;
+    clearButton.textContent = "Clear row";
+
+    row.appendChild(clearButton);
     rowsContainer.appendChild(row);
 }

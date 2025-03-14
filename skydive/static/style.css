@@ -270,6 +270,12 @@ h1 {
     text-align: center;
 }
 
+.flex-row .btn {
+    width: 100%;
+    padding: 1rem 0;
+    margin-bottom: 0;
+}
+
 .flex-row label {
     flex: 1;
 }
