@@ -4,18 +4,18 @@
 :root {
     --font-main: 'Poppins', sans-serif;
     --font-monospace: 'Courier Prime', 'Courier New', Courier, monospace;
-    --bg-color: #333;
-    --bg-color-hover: #3a3a3a;
+    --bg-color: hsl(205, 8%, 20%);
+    --bg-color-hover: hsl(205, 8%, 23%);
     --text-color: #fff;
     --text-color-inverted: #000;
-    --navbar-color: #222;
-    --navbar-color-hover: #2d2d2d;
-    --navbar-sub-color: #191919;
-    --navbar-sub-color-hover: #1d1d1d;
-    --logo-bg-color: #444;
-    --form-color: #444;
-    --form-color-hover: #555;
-    --form-color-darker: #282828;
+    --navbar-color: hsl(205, 10%, 15%);
+    --navbar-color-hover: hsl(205, 10%, 18%);
+    --navbar-sub-color: hsl(205, 12%, 10%);
+    --navbar-sub-color-hover: hsl(205, 12%, 12%);
+    --logo-bg-color: hsl(205, 8%, 27%);
+    --form-color: hsl(205, 8%, 27%);
+    --form-color-hover: hsl(205, 8%, 35%);
+    --form-color-darker: hsl(205, 12%, 16%);
     --main-color: hsl(197, 71%, 73%);
     --main-color-hover: hsl(197, 46%, 57%);
     --flash-success-color: #70d589;
