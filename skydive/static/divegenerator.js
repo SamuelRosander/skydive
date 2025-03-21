@@ -269,9 +269,9 @@ function addRow() {
 
     const clearButton = document.createElement("button");
     clearButton.type = "button";
-    clearButton.className = "btn";
+    clearButton.className = "btn mb-0";
     clearButton.id = `clear-${currentRows}`;
-    clearButton.textContent = "Clear row";
+    clearButton.textContent = "Clear";
 
     row.appendChild(clearButton);
     rowsContainer.appendChild(row);
