@@ -110,7 +110,7 @@
               maxlength="2" autocomplete="off"
               value="{{ rows[i][j] if program and j < rows[i]|length else '' }}">
           {% endfor %}
-          <button type="button" class="btn" id="clear-{{i}}">Clear row</button>
+          <button type="button" class="btn mb-0" id="clear-{{i}}">Clear</button>
         </div>
       {% endfor %}
     </div>

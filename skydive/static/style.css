@@ -270,12 +270,6 @@ h1 {
     text-align: center;
 }
 
-.flex-row .btn {
-    width: 100%;
-    padding: 1rem 0;
-    margin-bottom: 0;
-}
-
 .flex-row label {
     flex: 1;
 }
@@ -290,6 +284,7 @@ input[type=number] {
 }
 
 .btn {
+    line-height: 1;
     font-size: 1rem;
     font-family: var(--font-main);
     padding: 1rem;
@@ -614,5 +609,9 @@ input[type="checkbox"]:checked + label::after {
 
     .dive-generator-class-wrapper {
         max-width: 100%;
+    }
+
+    .flex-row .btn {
+        padding: 1rem 0.5rem;
     }
 }
