@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleForms();
 
     document.getElementById("rows-container").addEventListener("click", function (event) {
-        if (event.target.classList.contains("btn") && event.target.textContent === "Clear row") {
+        if (event.target.classList.contains("btn") && event.target.textContent === "Clear") {
             const row = event.target.closest(".flex-row");
             if (row) {
                 row.querySelectorAll("input").forEach(input => input.value = "");
