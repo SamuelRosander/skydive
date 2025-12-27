@@ -20,13 +20,30 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initializePage() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const jumpClass = urlParams.get('class') ?? "rookie";
-    setOptions(jumpClass);
+    const url = new URL(window.location);
+    const params = url.searchParams;
+
+    const hasProgram = params.has("program");
+    const formType = hasProgram ? "manual": params.get("form") || "random";
+
+    // Normalize URL
+    params.set("form", formType);
+    window.history.replaceState({}, "", url);
+
+    document.getElementById("form-random").checked = formType === "random";
+    document.getElementById("form-manual").checked = formType === "manual";
+
+    setOptions(params.get("class") ?? "aaa");
+
     document.getElementById("form-random").addEventListener("change", toggleForms);
     document.getElementById("form-manual").addEventListener("change", toggleForms);
     document.getElementById("add_row").addEventListener("click", addRow);
+
+    // Render without rewriting URL again
+    toggleForms(false);
 }
+
+
 
 function toggleDiveCustomForm() {
     const diveWrapper = document.getElementById("dive-options-wrapper");
@@ -230,22 +247,33 @@ function generateUrl(event) {
 }
 
 
-function toggleForms() {
+function toggleForms(updateUrl = true) {
     const randomRadio = document.getElementById("form-random");
     const manualRadio = document.getElementById("form-manual");
     
     const randomForm = document.getElementById("randomForm");
     const manualForm = document.getElementById("manualForm");
-  
+
+    let formType;
+
     if (randomRadio.checked) {
         randomForm.style.display = "flex";
         manualForm.style.display = "none";
+        formType = "random";
     }
-    else if (manualRadio.checked) {
+    else {
         manualForm.style.display = "flex";
         randomForm.style.display = "none";
+        formType = "manual";
+    }
+
+    if (updateUrl) {
+        const url = new URL(window.location);
+        url.searchParams.set("form", formType);
+        window.history.replaceState({}, "", url);
     }
 }
+
 
 function addRow() {
     const rowsContainer = document.getElementById("rows-container");

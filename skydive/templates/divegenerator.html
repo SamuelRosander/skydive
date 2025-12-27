@@ -25,7 +25,7 @@
     <label for="class">Class</label>
     <div class="flex-row mb-0">
       <input id="class-0" name="class" type="radio"
-        value="rookie" {{ "checked" if request.args.get("class") == "rookie" or not request.args.get("class")}}>
+        value="rookie" {{ "checked" if request.args.get("class") == "rookie" }}>
       <label class="radio_option" for="class-0">Rookie</label>
       
       <input id="class-1" name="class" type="radio"
@@ -37,7 +37,7 @@
       <label class="radio_option" for="class-2">AA</label>
       
       <input id="class-3" name="class" type="radio"
-        value="aaa" {{ "checked" if request.args.get("class") == "aaa" }}>
+        value="aaa" {{ "checked" if request.args.get("class") == "aaa" or not request.args.get("class")}}>
       <label class="radio_option" for="class-3">AAA</label>
       
       <input id="class-4" name="class" type="radio"
