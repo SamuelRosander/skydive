@@ -208,27 +208,27 @@ function setupMainCheckbox(mainCheckboxId, subCheckboxPrefix) {
 
 function generateUrl(event) {
     event.preventDefault();
-  
-    const form = document.getElementById("manualForm");
+
     const rows = [];
-  
-    for (let i = 0; i < 10; i++) {
+
+    document.querySelectorAll("#rows-container .flex-row").forEach(rowEl => {
         const row = [];
-        for (let j = 0; j < 6; j++) {
-            const input = document.getElementById(`f${i}${j}`);
-            if (input && input.value.trim() !== "") {
+
+        rowEl.querySelectorAll("input.form").forEach(input => {
+            if (input.value.trim() !== "") {
                 row.push(input.value.trim());
             }
-        }
+        });
+
         if (row.length > 0) {
             rows.push(row.join("-"));
         }
-    }
-  
+    });
+
     const customUrl = `?program=${rows.join("_")}`;
-  
     window.location.href = customUrl;
 }
+
 
 function toggleForms() {
     const randomRadio = document.getElementById("form-random");
