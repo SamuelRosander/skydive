@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
     setupMainCheckboxes();
     toggleForms();
 
+    document.getElementById("clear-all-btn").addEventListener("click", () => {
+        document.querySelectorAll("#rows-container .flex-row input").forEach(input => input.value = "");
+    });
+
+
     document.getElementById("rows-container").addEventListener("click", function (event) {
         if (event.target.classList.contains("btn") && event.target.textContent === "Clear") {
             const row = event.target.closest(".flex-row");
@@ -233,11 +238,11 @@ function toggleForms() {
     const manualForm = document.getElementById("manualForm");
   
     if (randomRadio.checked) {
-        randomForm.style.display = "block";
+        randomForm.style.display = "flex";
         manualForm.style.display = "none";
     }
     else if (manualRadio.checked) {
-        manualForm.style.display = "block";
+        manualForm.style.display = "flex";
         randomForm.style.display = "none";
     }
 }

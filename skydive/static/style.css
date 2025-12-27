@@ -391,6 +391,11 @@ input[type="radio"]:checked + .radio_option {
 
 #randomForm, #manualForm {
     display: none;
+    flex-direction: column;
+}
+
+#clear-all-btn {
+    align-self: flex-end;
 }
 
 #dive-options-wrapper {

@@ -100,6 +100,7 @@
   </form>
 
   <form id="manualForm" onsubmit="generateUrl(event)" method="get">
+    <button type="button" class="btn" id="clear-all-btn">Clear All</button>
     <div id="rows-container">
       {% set rows = program if program else range(3) %}
       {% for i in range(rows | length) %}
