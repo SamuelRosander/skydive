@@ -10,7 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     document.getElementById("rows-container").addEventListener("click", function (event) {
-        if (event.target.classList.contains("btn") && event.target.textContent === "Clear") {
+        if (
+            event.target.classList.contains("btn") &&
+            event.target.dataset.action === "clear"
+        ) {
             const row = event.target.closest(".flex-row");
             if (row) {
                 row.querySelectorAll("input").forEach(input => input.value = "");
@@ -302,9 +305,10 @@ function addRow() {
 
     const clearButton = document.createElement("button");
     clearButton.type = "button";
-    clearButton.className = "btn mb-0";
+    clearButton.className = "btn mb-0 delete";
     clearButton.id = `clear-${currentRows}`;
-    clearButton.textContent = "Clear";
+    clearButton.textContent = "×";
+    clearButton.dataset.action = "clear";
 
     row.appendChild(clearButton);
     rowsContainer.appendChild(row);
