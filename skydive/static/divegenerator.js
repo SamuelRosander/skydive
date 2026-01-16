@@ -28,7 +28,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
         }
     });
+
+    // -------------------- Modal --------------------
+    const modal = document.getElementById("programModal");
+    const modalBody = modal.querySelector(".modal-body");
+
+    document.getElementById("full-program").addEventListener("click", event => {
+        const row = event.target.closest(".jump-program");
+        if (!row) return;
+
+        modalBody.innerHTML = "";
+        row.querySelectorAll(".img-wrapper").forEach(wrapper => {
+            const clone = wrapper.cloneNode(true);
+            modalBody.appendChild(clone);
+        });
+
+        modal.style.display = "flex";
+    });
+
+    window.addEventListener("click", event => {
+        if (event.target === modal) modal.style.display = "none";
+    });
 });
+
+
+
+
 
 // -------------------- Row helpers --------------------
 const clearRow = row => {
@@ -301,3 +326,6 @@ const generateUrl = event => {
 
     window.location.href = `?program=${rows.join("_")}`;
 };
+
+
+
