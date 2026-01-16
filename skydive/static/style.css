@@ -269,6 +269,7 @@ h1 {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
+    position: relative;
 }
 
 .flex-row .form {
@@ -317,8 +318,8 @@ input[type=number] {
 }
 
 .btn.frame:hover {
-    background-color: var(--main-color-hover);
-    border-color: var(--main-color-hover);
+    background-color: var(--main-color);
+    border-color: var(--main-color);
     color: var(--text-color-inverted);
 }
 
@@ -333,7 +334,7 @@ input[type=number] {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 1.3em;
+    font-size: 1.4em;
 }
 
 .btn.clear:hover {
@@ -351,7 +352,7 @@ input[type=number] {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 1.3em;
+    font-size: 1.4em;
 }
 
 .btn.delete:hover {
@@ -565,7 +566,6 @@ input[type="checkbox"]:checked + label::after {
 }
 
 #btn-print {
-    margin-left: auto;
     margin-bottom: 2rem;
 }
 
@@ -574,11 +574,19 @@ input[type="checkbox"]:checked + label::after {
     gap: 5px;
     align-items: center;
     margin-bottom: 1rem;
+    position: relative;
 }
 
 .list-index {
+    position: absolute;
+    left: -1.6rem;
+    top: calc(50% - 0.6rem);
+    background-color: var(--bg-color);
+    border-radius: 50%;
     width: 1.5rem;
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .img-wrapper img {
@@ -724,5 +732,9 @@ input[type="checkbox"]:checked + label::after {
 
     .flex-row .form {
         margin-right: 0.5rem;
+    }
+
+    .list-index {
+        left: -1rem;
     }
 }

@@ -108,7 +108,7 @@
       {% set rows = program if program else range(3) %}
       {% for i in range(rows | length) %}
         <div class="flex-row">
-          <div class="list-index">{{ i+1 }}.</div>
+          <div class="list-index">{{ i+1 }}</div>
           {% for j in range(request.args.get("num_points", 5) | int) %}
             <input id="f{{i}}{{j}}" name="f{{i}}{{j}}" type="text" class="form"
               maxlength="2" autocomplete="off"
@@ -134,17 +134,17 @@
   <button type="button" onClick="printProgram()" class="btn" id="btn-print">Print</button>
 
   <div id="full-program">
-    {% for jump in program %}
+      {% for jump in program %}
       <div class="jump-program">
-        <div class="list-index">{{ loop.index }}.</div>
-        {% for formation in jump %}
+        <div class="list-index">{{ loop.index }}</div>
+          {% for formation in jump %}
           <div class="img-wrapper">
-            <img src="{{ url_for('static', filename='fs4pool/' + (formation | lower) + '.png') }}"
-              alt="{{ formation }}">
+              <img src="{{ url_for('static', filename='fs4pool/' + (formation | lower) + '.png') }}"
+                  alt="{{ formation }}">
           </div>
-        {% endfor %}
+          {% endfor %}
       </div>
-    {% endfor %}
+      {% endfor %}
   </div>
 {% endif %}
 

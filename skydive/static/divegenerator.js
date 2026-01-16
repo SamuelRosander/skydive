@@ -297,7 +297,7 @@ const printProgram = () => {
         <title>${window.location.href}</title>
         <style>
             .jump-program { display: flex; gap: 5px; align-items: center; margin-bottom: 2rem; }
-            .list-index { width: 1.5rem; flex-shrink: 0; }
+            .list-index { width: 1rem; flex-shrink: 0; }
             .img-wrapper img { width: 100%; height: auto; }
         </style>
     `);
