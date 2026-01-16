@@ -4,20 +4,60 @@ document.addEventListener("DOMContentLoaded", () => {
     setupMainCheckboxes();
     toggleForms();
 
+    document.getElementById("clear-all-btn").addEventListener("click", () => {
+        document.querySelectorAll("#rows-container .flex-row input").forEach(input => input.value = "");
+    });
+
+
     document.getElementById("rows-container").addEventListener("click", function (event) {
-        if (event.target.classList.contains("btn") && event.target.textContent === "Clear") {
+        if (
+            event.target.classList.contains("btn") &&
+            event.target.dataset.action === "clear"
+        ) {
             const row = event.target.closest(".flex-row");
             if (row) {
                 row.querySelectorAll("input").forEach(input => input.value = "");
             }
         }
     });
+
+    document.getElementById("rows-container").addEventListener("click", function (event) {
+        const button = event.target.closest("button[data-action='delete']");
+        if (!button) return;
+
+        const row = button.closest(".flex-row");
+        if (!row) return;
+
+        const container = document.getElementById("rows-container");
+        const rows = Array.from(container.querySelectorAll(".flex-row"));
+        const rowIndex = rows.indexOf(row);
+
+        if (rowIndex === -1) return;
+
+        for (let i = rowIndex; i < rows.length - 1; i++) {
+            const currentInputs = rows[i].querySelectorAll("input.form");
+            const nextInputs = rows[i + 1].querySelectorAll("input.form");
+
+            currentInputs.forEach((input, idx) => {
+                input.value = nextInputs[idx]?.value || "";
+            });
+        }
+
+        const lastRow = rows[rows.length - 1];
+        lastRow.remove();
+
+        container.querySelectorAll(".list-index").forEach((el, idx) => {
+            el.textContent = `${idx + 1}.`;
+        });
+    });
+
+
 });
 
 function initializePage() {
     const urlParams = new URLSearchParams(window.location.search);
-    const jumpClass = urlParams.get('class') ?? "rookie";
-    setOptions(jumpClass);
+    setCustomOptions(urlParams.get('class') ?? "aaa");
+
     document.getElementById("form-random").addEventListener("change", toggleForms);
     document.getElementById("form-manual").addEventListener("change", toggleForms);
     document.getElementById("add_row").addEventListener("click", addRow);
@@ -49,10 +89,10 @@ function setRadioValue(value) {
 
 function setupRadioButtons() {
     const radioButtons = document.querySelectorAll('input[name="class"]');
-    radioButtons.forEach(radio => radio.addEventListener("change", (event) => setOptions(event.target.value)));
+    radioButtons.forEach(radio => radio.addEventListener("change", (event) => setCustomOptions(event.target.value)));
 }
 
-function setOptions(jumpClass) {
+function setCustomOptions(jumpClass) {
     let numPoints;
     switch (jumpClass) {
         case "rookie":
@@ -203,27 +243,27 @@ function setupMainCheckbox(mainCheckboxId, subCheckboxPrefix) {
 
 function generateUrl(event) {
     event.preventDefault();
-  
-    const form = document.getElementById("manualForm");
+
     const rows = [];
-  
-    for (let i = 0; i < 10; i++) {
+
+    document.querySelectorAll("#rows-container .flex-row").forEach(rowEl => {
         const row = [];
-        for (let j = 0; j < 6; j++) {
-            const input = document.getElementById(`f${i}${j}`);
-            if (input && input.value.trim() !== "") {
+
+        rowEl.querySelectorAll("input.form").forEach(input => {
+            if (input.value.trim() !== "") {
                 row.push(input.value.trim());
             }
-        }
+        });
+
         if (row.length > 0) {
             rows.push(row.join("-"));
         }
-    }
-  
+    });
+
     const customUrl = `?program=${rows.join("_")}`;
-  
     window.location.href = customUrl;
 }
+
 
 function toggleForms() {
     const randomRadio = document.getElementById("form-random");
@@ -231,48 +271,62 @@ function toggleForms() {
     
     const randomForm = document.getElementById("randomForm");
     const manualForm = document.getElementById("manualForm");
-  
+
     if (randomRadio.checked) {
-        randomForm.style.display = "block";
+        randomForm.style.display = "flex";
         manualForm.style.display = "none";
     }
-    else if (manualRadio.checked) {
-        manualForm.style.display = "block";
+    else {
+        manualForm.style.display = "flex";
         randomForm.style.display = "none";
     }
 }
 
+
 function addRow() {
     const rowsContainer = document.getElementById("rows-container");
-    const currentRows = rowsContainer.querySelectorAll(".flex-row").length;
+    const rows = rowsContainer.querySelectorAll(".flex-row");
+    const rowIndex = rows.length;
+
     const urlParams = new URLSearchParams(window.location.search);
-    const numColumns = parseInt(urlParams.get("num_points")) || 5;
+    const numColumns = parseInt(urlParams.get("num_points"), 10) || 5;
 
     const row = document.createElement("div");
     row.className = "flex-row";
 
+    // Index label
     const indexDiv = document.createElement("div");
     indexDiv.className = "list-index";
-    indexDiv.textContent = `${currentRows + 1}.`;
+    indexDiv.textContent = `${rowIndex + 1}.`;
     row.appendChild(indexDiv);
 
+    // Inputs
     for (let colIndex = 0; colIndex < numColumns; colIndex++) {
         const input = document.createElement("input");
         input.type = "text";
         input.className = "form";
         input.maxLength = 2;
         input.autocomplete = "off";
-        input.id = `f${currentRows}${colIndex}`;
-        input.name = `f${currentRows}${colIndex}`;
+        input.id = `f${rowIndex}${colIndex}`;
+        input.name = `f${rowIndex}${colIndex}`;
         row.appendChild(input);
     }
 
+    // Clear button
     const clearButton = document.createElement("button");
     clearButton.type = "button";
-    clearButton.className = "btn mb-0";
-    clearButton.id = `clear-${currentRows}`;
-    clearButton.textContent = "Clear";
-
+    clearButton.className = "btn mb-0 clear";
+    clearButton.textContent = "←";
+    clearButton.dataset.action = "clear";
     row.appendChild(clearButton);
+
+    // Delete button
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className = "btn mb-0 delete";
+    deleteButton.textContent = "×";
+    deleteButton.dataset.action = "delete";
+    row.appendChild(deleteButton);
+
     rowsContainer.appendChild(row);
 }

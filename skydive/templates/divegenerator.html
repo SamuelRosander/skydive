@@ -16,16 +16,17 @@
   <form id="randomForm" action="" method="get">
     <label for="num_jumps">Number of jumps</label>
     <div class="form-number">
-      <button type="button" class="btn" onClick="changeNum('num_jumps', -1)">-</button>
+      <button type="button" class="btn btn-decrement" onClick="changeNum('num_jumps', -1)">-</button>
       <input class="form" id="num_jumps" name="num_jumps" type="number"
         value="{{ request.args.get('num_jumps') or '10' }}">
-      <button type="button" class="btn" onClick="changeNum('num_jumps', 1)">+</button>
+      <button type="button" class="btn btn-increment" onClick="changeNum('num_jumps', 1)">+</button>
     </div>
+
 
     <label for="class">Class</label>
     <div class="flex-row mb-0">
       <input id="class-0" name="class" type="radio"
-        value="rookie" {{ "checked" if request.args.get("class") == "rookie" or not request.args.get("class")}}>
+        value="rookie" {{ "checked" if request.args.get("class") == "rookie" }}>
       <label class="radio_option" for="class-0">Rookie</label>
       
       <input id="class-1" name="class" type="radio"
@@ -37,7 +38,7 @@
       <label class="radio_option" for="class-2">AA</label>
       
       <input id="class-3" name="class" type="radio"
-        value="aaa" {{ "checked" if request.args.get("class") == "aaa" }}>
+        value="aaa" {{ "checked" if request.args.get("class") == "aaa" or not request.args.get("class")}}>
       <label class="radio_option" for="class-3">AAA</label>
       
       <input id="class-4" name="class" type="radio"
@@ -47,9 +48,9 @@
     <div id="dive-options-wrapper" class="disabled">
       <label for="num_points">Min points per jump</label>
       <div class="form-number">
-        <button type="button" class="btn" onClick="changeNum('num_points', -1)">-</button>
+        <button type="button" class="btn btn-decrement" onClick="changeNum('num_points', -1)">-</button>
         <input class="form" id="num_points" name="num_points" type="number" value="4">
-        <button type="button" class="btn" onClick="changeNum('num_points', 1)">+</button>
+        <button type="button" class="btn btn-increment" onClick="changeNum('num_points', 1)">+</button>
       </div>
       <div class="dive-options-flex-wrapper">
         <div class="checkbox-wrapper">
@@ -96,10 +97,13 @@
     </div>
     <button type="button" id="dive-options-toggle"
       onClick="toggleDiveCustomForm()">Show options</button>
-    <button type="submit" class="btn">Generate</button>
+    <div class="flex-row">
+      <button type="submit" class="btn mb-0">Generate</button>
+    </div>
   </form>
 
   <form id="manualForm" onsubmit="generateUrl(event)" method="get">
+    <button type="button" class="btn delete-frame" id="clear-all-btn">Clear All</button>
     <div id="rows-container">
       {% set rows = program if program else range(3) %}
       {% for i in range(rows | length) %}
@@ -110,13 +114,16 @@
               maxlength="2" autocomplete="off"
               value="{{ rows[i][j] if program and j < rows[i]|length else '' }}">
           {% endfor %}
-          <button type="button" class="btn mb-0" id="clear-{{i}}">Clear</button>
+          <button type="button" class="btn mb-0 clear" id="clear-{{i}}" data-action="clear" title="Clear">
+            &larr;</button>
+          <button type="button" class="btn mb-0 delete" id="delete-{{i}}" data-action="delete" title="Delete">
+            &times;</button>
         </div>
       {% endfor %}
     </div>
     <div class="flex-row">
-      <button type="submit" class="btn">Generate</button>
-      <button type="button" class="btn uncolored" id="add_row">Add row</button>
+      <button type="submit" class="btn mb-0">Generate</button>
+      <button type="button" class="btn frame mb-0" id="add_row">Add row</button>
     </div>
   </form>
 </div>
@@ -124,7 +131,7 @@
 {% if program %}
   <div class="line"></div>
 
-  <button type="button" onClick="printProgram()" class="btn">Print</button>
+  <button type="button" onClick="printProgram()" class="btn" id="btn-print">Print</button>
 
   <div id="full-program">
     {% for jump in program %}

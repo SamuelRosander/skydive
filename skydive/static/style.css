@@ -15,9 +15,11 @@
     --logo-bg-color: hsl(205, 8%, 27%);
     --form-color: hsl(205, 8%, 27%);
     --form-color-hover: hsl(205, 8%, 35%);
+    --form-color-lighter: hsl(205, 8%, 30%);
     --form-color-darker: hsl(205, 12%, 16%);
     --main-color: hsl(197, 71%, 73%);
     --main-color-hover: hsl(197, 46%, 57%);
+    --delete-color: hsl(0, 100%, 62%);
     --flash-success-color: #70d589;
     --flash-message-color: #a170d5;
     --flash-warning-color: #ad9032;
@@ -236,13 +238,20 @@ h1 {
 
 .form-number {
     display: flex;
-    gap: 1px;
 }
 
-.form-number button {
-    background-color: var(--form-color);
+.form-number .btn {
+    background-color: var(--form-color-lighter);
     color: var(--text-color);
     width: 3rem;
+}
+
+.form-number .btn-decrement {
+    border-radius: 10px 0 0 10px;
+}
+
+.form-number .btn-increment {
+    border-radius: 0 10px 10px 0;
 }
 
 .form-number button:hover {
@@ -258,7 +267,6 @@ h1 {
     justify-content: space-between;
     width: 100%;
     display: flex;
-    gap: 0.5rem;
     align-items: center;
     margin-bottom: 1rem;
 }
@@ -268,6 +276,7 @@ h1 {
     padding: 1rem 0;
     margin-bottom: 0;
     text-align: center;
+    margin-right: 1rem;
 }
 
 .flex-row label {
@@ -292,6 +301,7 @@ input[type=number] {
     color: var(--text-color-inverted);
     display: block;
     margin-bottom: 1rem;
+    border-radius: 10px;
 }
 
 .btn:hover {
@@ -299,13 +309,66 @@ input[type=number] {
     cursor: pointer;
 }
 
-.btn.uncolored {
-    background-color: var(--form-color);
-    color: var(--text-color);
+.btn.frame {
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border: 2px solid var(--main-color);
+    padding: calc(1rem - 2px);
 }
 
-.btn.uncolored:hover {
-    background-color: var(--form-color-hover);
+.btn.frame:hover {
+    background-color: var(--main-color-hover);
+    border-color: var(--main-color-hover);
+    color: var(--text-color-inverted);
+}
+
+.btn.clear {
+    background-color: var(--form-color-darker);
+    color: var(--main-color);
+    margin-right: 2px;
+    padding: 0;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.3em;
+}
+
+.btn.clear:hover {
+    background-color: var(--main-color);
+    color: var(--text-color-inverted);
+}
+
+.btn.delete {
+    background-color: var(--form-color-darker);
+    color: var(--delete-color);
+    padding: 0;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.3em;
+}
+
+.btn.delete:hover {
+    background-color: var(--delete-color);
+    color: var(--text-color-inverted);
+}
+
+.btn.delete-frame {
+    background-color: var(--bg-color);
+    color: var(--delete-color);
+    border: 2px solid var(--delete-color);
+    padding: calc(1rem - 2px);
+}
+
+.btn.delete-frame:hover {
+    background-color: var(--delete-color);
+    color: var(--text-color-inverted);
 }
 
 .btn:disabled:hover {
@@ -318,9 +381,14 @@ input[type=number] {
     padding: 1rem 0;
     display: inline-block;
     user-select: none;
-    box-shadow: inset 0 -2px 0 var(--form-color-hover);
+    box-shadow: inset 0 -2px 0 var(--main-color);
     text-align: center;
     overflow: hidden;
+    border-radius: 10px 10px 0 0;
+}
+
+.radio_option:nth-of-type(even) {
+    background-color: var(--form-color-lighter);
 }
 
 .radio_option:hover {
@@ -339,8 +407,8 @@ input[type="radio"]:focus-visible + .radio_option {
 }
 
 input[type="radio"]:checked + .radio_option {
-    background-color: var(--form-color-hover);
-    color: var(--main-color);
+    background-color: var(--main-color);
+    color: var(--text-color-inverted);
     box-shadow: inset 0 -2px 0 var(--main-color);
 }
 
@@ -391,6 +459,11 @@ input[type="radio"]:checked + .radio_option {
 
 #randomForm, #manualForm {
     display: none;
+    flex-direction: column;
+}
+
+#clear-all-btn {
+    align-self: flex-end;
 }
 
 #dive-options-wrapper {
@@ -419,7 +492,8 @@ input[type="radio"]:checked + .radio_option {
     padding: 0.5rem;
     cursor: pointer;
     color: var(--text-color);
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 0 0 10px 10px;
 }
 
 .dive-options-flex-wrapper {
@@ -488,6 +562,11 @@ input[type="checkbox"]:checked + label::after {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+#btn-print {
+    margin-left: auto;
+    margin-bottom: 2rem;
 }
 
 .jump-program {
@@ -611,7 +690,7 @@ input[type="checkbox"]:checked + label::after {
         max-width: 100%;
     }
 
-    .flex-row .btn {
-        padding: 1rem 0.5rem;
+    .flex-row .form {
+        margin-right: 0.5rem;
     }
 }
