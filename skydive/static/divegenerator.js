@@ -78,9 +78,6 @@ const deleteRow = (row, container) => {
 
     // Remove last row from DOM
     rows[rows.length - 1].remove();
-
-    // Update visible indices
-    container.querySelectorAll(".list-index").forEach((el, idx) => el.textContent = `${idx + 1}.`);
 };
 
 const addRow = () => {
@@ -94,7 +91,7 @@ const addRow = () => {
     // Index label
     const indexDiv = document.createElement("div");
     indexDiv.className = "list-index";
-    indexDiv.textContent = `${rowIndex + 1}.`;
+    indexDiv.textContent = `${rowIndex + 1}`;
     row.appendChild(indexDiv);
 
     // Inputs
