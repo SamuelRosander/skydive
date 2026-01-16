@@ -97,7 +97,9 @@
     </div>
     <button type="button" id="dive-options-toggle"
       onClick="toggleDiveCustomForm()">Show options</button>
-    <button type="submit" class="btn">Generate</button>
+    <div class="flex-row">
+      <button type="submit" class="btn mb-0">Generate</button>
+    </div>
   </form>
 
   <form id="manualForm" onsubmit="generateUrl(event)" method="get">
@@ -120,8 +122,8 @@
       {% endfor %}
     </div>
     <div class="flex-row">
-      <button type="submit" class="btn">Generate</button>
-      <button type="button" class="btn frame" id="add_row">Add row</button>
+      <button type="submit" class="btn mb-0">Generate</button>
+      <button type="button" class="btn frame mb-0" id="add_row">Add row</button>
     </div>
   </form>
 </div>
@@ -129,7 +131,7 @@
 {% if program %}
   <div class="line"></div>
 
-  <button type="button" onClick="printProgram()" class="btn">Print</button>
+  <button type="button" onClick="printProgram()" class="btn" id="btn-print">Print</button>
 
   <div id="full-program">
     {% for jump in program %}

@@ -247,11 +247,11 @@ h1 {
 }
 
 .form-number .btn-decrement {
-    border-radius: 8px 0 0 8px;
+    border-radius: 10px 0 0 10px;
 }
 
 .form-number .btn-increment {
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 10px 10px 0;
 }
 
 .form-number button:hover {
@@ -562,6 +562,11 @@ input[type="checkbox"]:checked + label::after {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+#btn-print {
+    margin-left: auto;
+    margin-bottom: 2rem;
 }
 
 .jump-program {

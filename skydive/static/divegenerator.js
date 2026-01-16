@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (rowIndex === -1) return;
 
-        // Shift values upward
         for (let i = rowIndex; i < rows.length - 1; i++) {
             const currentInputs = rows[i].querySelectorAll("input.form");
             const nextInputs = rows[i + 1].querySelectorAll("input.form");
@@ -44,11 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // Remove the last row from the DOM
         const lastRow = rows[rows.length - 1];
         lastRow.remove();
 
-        // Optional: update visible indices
         container.querySelectorAll(".list-index").forEach((el, idx) => {
             el.textContent = `${idx + 1}.`;
         });
@@ -58,30 +55,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initializePage() {
-    const url = new URL(window.location);
-    const params = url.searchParams;
-
-    const hasProgram = params.has("program");
-    const formType = hasProgram ? "manual": params.get("form") || "random";
-
-    // Normalize URL
-    params.set("form", formType);
-    window.history.replaceState({}, "", url);
-
-    document.getElementById("form-random").checked = formType === "random";
-    document.getElementById("form-manual").checked = formType === "manual";
-
-    setOptions(params.get("class") ?? "aaa");
+    const urlParams = new URLSearchParams(window.location.search);
+    setCustomOptions(urlParams.get('class') ?? "aaa");
 
     document.getElementById("form-random").addEventListener("change", toggleForms);
     document.getElementById("form-manual").addEventListener("change", toggleForms);
     document.getElementById("add_row").addEventListener("click", addRow);
-
-    // Render without rewriting URL again
-    toggleForms(false);
 }
-
-
 
 function toggleDiveCustomForm() {
     const diveWrapper = document.getElementById("dive-options-wrapper");
@@ -109,10 +89,10 @@ function setRadioValue(value) {
 
 function setupRadioButtons() {
     const radioButtons = document.querySelectorAll('input[name="class"]');
-    radioButtons.forEach(radio => radio.addEventListener("change", (event) => setOptions(event.target.value)));
+    radioButtons.forEach(radio => radio.addEventListener("change", (event) => setCustomOptions(event.target.value)));
 }
 
-function setOptions(jumpClass) {
+function setCustomOptions(jumpClass) {
     let numPoints;
     switch (jumpClass) {
         case "rookie":
@@ -285,30 +265,20 @@ function generateUrl(event) {
 }
 
 
-function toggleForms(updateUrl = true) {
+function toggleForms() {
     const randomRadio = document.getElementById("form-random");
     const manualRadio = document.getElementById("form-manual");
     
     const randomForm = document.getElementById("randomForm");
     const manualForm = document.getElementById("manualForm");
 
-    let formType;
-
     if (randomRadio.checked) {
         randomForm.style.display = "flex";
         manualForm.style.display = "none";
-        formType = "random";
     }
     else {
         manualForm.style.display = "flex";
         randomForm.style.display = "none";
-        formType = "manual";
-    }
-
-    if (updateUrl) {
-        const url = new URL(window.location);
-        url.searchParams.set("form", formType);
-        window.history.replaceState({}, "", url);
     }
 }
 
