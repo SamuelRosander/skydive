@@ -20,6 +20,41 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
+
+    document.getElementById("rows-container").addEventListener("click", function (event) {
+        const button = event.target.closest("button[data-action='delete']");
+        if (!button) return;
+
+        const row = button.closest(".flex-row");
+        if (!row) return;
+
+        const container = document.getElementById("rows-container");
+        const rows = Array.from(container.querySelectorAll(".flex-row"));
+        const rowIndex = rows.indexOf(row);
+
+        if (rowIndex === -1) return;
+
+        // Shift values upward
+        for (let i = rowIndex; i < rows.length - 1; i++) {
+            const currentInputs = rows[i].querySelectorAll("input.form");
+            const nextInputs = rows[i + 1].querySelectorAll("input.form");
+
+            currentInputs.forEach((input, idx) => {
+                input.value = nextInputs[idx]?.value || "";
+            });
+        }
+
+        // Remove the last row from the DOM
+        const lastRow = rows[rows.length - 1];
+        lastRow.remove();
+
+        // Optional: update visible indices
+        container.querySelectorAll(".list-index").forEach((el, idx) => {
+            el.textContent = `${idx + 1}.`;
+        });
+    });
+
+
 });
 
 function initializePage() {
@@ -280,36 +315,48 @@ function toggleForms(updateUrl = true) {
 
 function addRow() {
     const rowsContainer = document.getElementById("rows-container");
-    const currentRows = rowsContainer.querySelectorAll(".flex-row").length;
+    const rows = rowsContainer.querySelectorAll(".flex-row");
+    const rowIndex = rows.length;
+
     const urlParams = new URLSearchParams(window.location.search);
-    const numColumns = parseInt(urlParams.get("num_points")) || 5;
+    const numColumns = parseInt(urlParams.get("num_points"), 10) || 5;
 
     const row = document.createElement("div");
     row.className = "flex-row";
 
+    // Index label
     const indexDiv = document.createElement("div");
     indexDiv.className = "list-index";
-    indexDiv.textContent = `${currentRows + 1}.`;
+    indexDiv.textContent = `${rowIndex + 1}.`;
     row.appendChild(indexDiv);
 
+    // Inputs
     for (let colIndex = 0; colIndex < numColumns; colIndex++) {
         const input = document.createElement("input");
         input.type = "text";
         input.className = "form";
         input.maxLength = 2;
         input.autocomplete = "off";
-        input.id = `f${currentRows}${colIndex}`;
-        input.name = `f${currentRows}${colIndex}`;
+        input.id = `f${rowIndex}${colIndex}`;
+        input.name = `f${rowIndex}${colIndex}`;
         row.appendChild(input);
     }
 
+    // Clear button
     const clearButton = document.createElement("button");
     clearButton.type = "button";
-    clearButton.className = "btn mb-0 delete";
-    clearButton.id = `clear-${currentRows}`;
-    clearButton.textContent = "×";
+    clearButton.className = "btn mb-0 clear";
+    clearButton.textContent = "←";
     clearButton.dataset.action = "clear";
-
     row.appendChild(clearButton);
+
+    // Delete button
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className = "btn mb-0 delete";
+    deleteButton.textContent = "×";
+    deleteButton.dataset.action = "delete";
+    row.appendChild(deleteButton);
+
     rowsContainer.appendChild(row);
 }
