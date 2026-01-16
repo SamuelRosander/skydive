@@ -465,6 +465,7 @@ input[type="radio"]:checked + .radio_option {
     cursor: pointer;
     color: var(--text-color);
     margin-bottom: 1rem;
+    border-radius: 0 0 10px 10px;
 }
 
 .dive-options-flex-wrapper {
