@@ -133,12 +133,13 @@ const initPage = (rowsContainer) => {
     document.getElementById("form-random").addEventListener("change", toggleForms);
     document.getElementById("form-manual").addEventListener("change", toggleForms);
     document.getElementById("add_row").addEventListener("click", addRow);
+    document.getElementById("randomForm").addEventListener("submit", handleRandomSubmit);
+
 };
 
 // -------------------- Form toggle --------------------
 const toggleForms = () => {
     const randomRadio = document.getElementById("form-random");
-    const manualRadio = document.getElementById("form-manual");
     const randomForm = document.getElementById("randomForm");
     const manualForm = document.getElementById("manualForm");
 
@@ -196,7 +197,6 @@ const setCustomOptions = jumpClass => {
 const configureFormations = (enable, disable = []) => {
     enable.forEach(type => checkFormations(type));
     disable.forEach(type => checkFormations(type, false));
-    disableAll();
 };
 
 const getCustomNumPoints = () => {
@@ -207,10 +207,7 @@ const getCustomNumPoints = () => {
 const toggleCustomOptions = enable => {
     if (enable) {
         showDiveCustomForm();
-        disableAll(false);
         checkCustomFormations();
-    } else {
-        disableAll();
     }
 };
 
@@ -236,6 +233,18 @@ const setupMainCheckboxes = () => {
     setupMainCheckbox("a_blocks", "a_block-");
     setupMainCheckbox("aa_blocks", "aa_block-");
     setupMainCheckbox("aaa_blocks", "aaa_block-");
+
+    const wrapper = document.getElementById("dive-options-wrapper");
+
+    wrapper.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener("change", () => {
+            const current = document.querySelector('input[name="class"]:checked');
+            if (current && current.value !== "custom") {
+                setRadioValue("custom");
+                setCustomOptions("custom");
+            }
+        });
+    });
 };
 
 const setupMainCheckbox = (mainId, prefix) => {
@@ -274,15 +283,20 @@ const checkCustomFormations = () => {
     });
 };
 
-const disableAll = (state = true) => {
-    const wrapper = document.getElementById("dive-options-wrapper");
-    wrapper.classList.toggle("disabled", state);
-    wrapper.querySelectorAll("*").forEach(el => {
-        if (el instanceof HTMLInputElement || el instanceof HTMLButtonElement) {
-            el.disabled = state;
-        }
-    });
+
+// -------------------- Submit --------------------
+const handleRandomSubmit = event => {
+    const selectedClass = document.querySelector('input[name="class"]:checked')?.value;
+
+    // only keep checkboxes when custom
+    if (selectedClass !== "custom") {
+        const form = event.target;
+
+        form.querySelectorAll('#dive-options-wrapper input[type="checkbox"]')
+            .forEach(cb => cb.removeAttribute("name")); 
+    }
 };
+
 
 // -------------------- Print --------------------
 const printProgram = () => {

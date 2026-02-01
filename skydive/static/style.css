@@ -483,10 +483,6 @@ input[type="radio"]:checked + .radio_option {
     visibility: visible;
 }
 
-#dive-options-wrapper.disabled * {
-    opacity: 0.6;
-}
-
 #dive-options-toggle {
     width: 100%;
     background-color: var(--navbar-color);
