@@ -79,6 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
 function changeNum(target, delta) {
     const field = document.getElementById(target);
     field.value = Math.max(0, Math.floor(Number(field.value) + Number(delta)));
+
+    if (target === "num_points") {
+        setRadioValue("custom");
+    }
 }
 
 // Close the navbar if clicking outside of the menu or menu button
