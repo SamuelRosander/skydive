@@ -34,7 +34,18 @@ document.querySelectorAll("#navbar a").forEach((link) => {
 // Toggle visibility of the menu when using mobile layout
 function toggleMenu() {
     const navbar = document.getElementById("navbar");
+    const menuIcon = document.getElementById("menu-icon");
+
     navbar.classList.toggle("visible");
+
+    if (navbar.classList.contains("visible")) {
+        menuIcon.classList.remove("bx-menu");
+        menuIcon.classList.add("bx-x");
+    }
+    else {
+        menuIcon.classList.remove("bx-x");
+        menuIcon.classList.add("bx-menu");
+    }
 }
 
 // Toggle Logbook sub meenu in the navbar and rotating the chevron
@@ -93,7 +104,11 @@ document.onclick = function (e) {
 
     if (!valuesToCheck.some(value => parentIds.includes(value))) {
         const navbar = document.getElementById("navbar");
+        const menuIcon = document.getElementById("menu-icon");
+
         navbar.classList.remove("visible");
+        menuIcon.classList.remove("bx-x");
+        menuIcon.classList.add("bx-menu");
     }
 };
 

@@ -13,12 +13,12 @@
   </head>
   <body>
     <div class="wrapper">
+      <button id="menu-button" onclick="toggleMenu()">
+        <i id="menu-icon" class="bx bx-menu"></i>
+      </button>
       <div class="header">
         <a href="{{ url_for('main.home') }}" class="site-logo">
           <i class='bx bx-cloud'></i>Skydiving</a>
-        <button id="menu-button" onClick="toggleMenu()">
-          <i class='bx bx-menu'></i>
-        </button>
       </div>
       <div class="content">
         <nav id="navbar">
