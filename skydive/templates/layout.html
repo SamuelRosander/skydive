@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% block title %}Skydiving - Samuel Rosander{% endblock %}</title>
+    <title>Skydive - {% block title %}Samuel Rosander{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
     <link rel="icon" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
@@ -18,7 +18,7 @@
       </button>
       <div class="header">
         <a href="{{ url_for('main.home') }}" class="site-logo">
-          <i class='bx bx-cloud'></i>Skydiving</a>
+          <i class='bx bx-cloud'></i>Skydive</a>
       </div>
       <div class="content">
         <nav id="navbar">

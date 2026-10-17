@@ -1,9 +1,25 @@
 {
+    "id": "/",
+    "name": "Skydive",
+    "short_name": "Skydive",
+    "description": "Skydive - Samuel Rosander",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#333333",
+    "theme_color": "#000000",
     "icons": [
         {
-            "src": "/img/favicon-192.png",
-            "sizes": "any",
-            "type": "image/png"
+            "src": "/static/img/favicon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/static/img/favicon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
         }
     ]
 }
